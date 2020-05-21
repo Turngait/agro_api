@@ -1,5 +1,6 @@
 import paths
 from app import app, mongo
+import routes_user
 from User_controller import User_controller
 from flask import jsonify
 
@@ -9,11 +10,6 @@ def index():
     controller = User_controller()
     answer = controller.showMain()
     return answer
-
-
-@app.route('/name/<name>')
-def user(name):
-    return '<h1>Hello, '+name+'</h1>'
 
 @app.route('/test')
 def test():

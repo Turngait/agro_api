@@ -1,5 +1,11 @@
 from app import mongo
-from datetime import datetime
 
 class User:
-  pass
+  def __init__(self):
+    self.name = 'Ivan'
+
+  def sign_in(self):
+    pass
+
+  def sign_up(self):
+    pass
