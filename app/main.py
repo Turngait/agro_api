@@ -1,15 +1,13 @@
 import paths
 from app import app, mongo
 import routes_user
-from User_controller import User_controller
 from flask import jsonify
 
 
 @app.route('/')
 def index():
-    controller = User_controller()
-    answer = controller.showMain()
-    return answer
+    online_users = mongo.db.users.find()
+    return '<h1>Hello, user</h1><br><p>Your browser is ' + str(online_users[0]) + '</p>'
 
 @app.route('/test')
 def test():
