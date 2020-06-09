@@ -16,7 +16,23 @@ def user(name):
 
 @app.route('/user/signin', methods=['POST'])
 def signin():
-    return jsonify({'test': True})
+    if request.method == 'POST':
+        dto = DTO()
+        data = request.get_json()
+        user = User()
+        token = user.sign_in(data)
+
+        if token:
+            dto.setSuccessCreate()
+            dto.setData({'token': token})
+            responce = dto.getResponce()
+            status = 200
+        else: 
+            dto.setAccesDenied()
+            responce = dto.getResponce()
+            status = 403
+
+        return jsonify(responce), status
 
 
 @app.route('/user/signup', methods=['POST'])
@@ -30,7 +46,11 @@ def signup():
         if is_signup:
             dto.setSuccessCreate()
             responce = dto.getResponce()
-        else: 
-            responce = {'status': False}
+            status = 204
 
-        return jsonify(responce)
+        else: 
+            dto.setServerError()
+            responce = dto.getResponce()
+            status = 503
+
+        return jsonify(responce), status
