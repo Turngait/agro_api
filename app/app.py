@@ -9,6 +9,7 @@ CORS(app)
 app.config['SQLALCHEMY_DATABASE_URI'] = db_config['mysql']
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config["MONGO_URI"] = db_config['mongo']
+app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024
 
 db = SQLAlchemy(app)
 mongo = PyMongo(app)

@@ -27,6 +27,7 @@ class User:
     
     paper = createPaper(datetime.datetime.utcnow())
     password = hashPass(data['pass'], paper)
+    token = crateToken(data['email'])
     info = {
       'name': data['name'],
       'email': data['email'],
@@ -34,13 +35,14 @@ class User:
       'pass_hash': password,
       'paper': paper,
       'products': [],
+      'token': token,
       'createdAt': datetime.datetime.utcnow()
     }
     
     id_user = mongo.db.users.insert_one(info).inserted_id
 
     if id_user:
-      return True
+      return token
     else:
       return False
 

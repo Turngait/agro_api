@@ -1,7 +1,8 @@
 import paths
 from app import app, mongo
 import routes_user
-from flask import jsonify
+from flask import jsonify, request
+import os
 
 
 @app.route('/')
@@ -17,6 +18,17 @@ def test():
     }
 
     return jsonify(obj_test)
+
+@app.route('/testFile', methods=['POST'])
+def testFile():
+    req = request.files['avatar']
+    file_name = req.filename
+    app_root = os.path.dirname(os.path.abspath(__file__))
+    target = os.path.join(app_root, 'img/')
+    destination = '/'.join([target, file_name])
+    req.save(destination)
+
+    return jsonify({'test': True})
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0')

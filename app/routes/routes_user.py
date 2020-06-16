@@ -41,12 +41,13 @@ def signup():
         dto = DTO()
         data = request.get_json()
         user = User()
-        is_signup = user.sign_up(data)
+        token = user.sign_up(data)
         
-        if is_signup:
+        if token:
             dto.setSuccessCreate()
+            dto.setData({'token': token})
             responce = dto.getResponce()
-            status = 204
+            status = 202
 
         else: 
             dto.setServerError()
